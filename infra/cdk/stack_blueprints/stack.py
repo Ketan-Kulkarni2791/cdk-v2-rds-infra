@@ -1,6 +1,7 @@
 """Main python file_key for adding resources to the application stack."""
 from typing import Dict, Any
 import aws_cdk
+import aws_cdk.aws_ec2 as ec2
 from constructs import Construct
 
 from .vpc_construct import VPCService
@@ -39,7 +40,6 @@ class MainProjectStack(aws_cdk.Stack):
             stack,
             existing_vpc
         )
-        print(f"----------- ********* rds_security_group : {rds_security_group}")
 
         # Create Security Group for Lambda
         lambda_security_group = SecurityGroupConstruct.create_lambda_security_group(
@@ -53,4 +53,24 @@ class MainProjectStack(aws_cdk.Stack):
             stack,
             existing_vpc
         )
-        print(f"----------- ********* CodeBuild_security_group : {CodeBuild_security_group}")
+
+        CodeBuild_security_group.connections.allow_to_any_ipv4(
+            ec2.Port.tcp(443),
+            "Grant Outbound to Github (or anything else.)"
+        )
+
+        # Allow connection to RDS for Codebuild
+        rds_security_group.connections.allow_from(
+            CodeBuild_security_group,
+            ec2.Port.tcp(5432),
+            "Allow CodeBuild access to RDS on port 5432"
+        )
+
+        # Allow connection to RDS for Api Lambda
+        rds_security_group.connections.allow_from(
+            lambda_security_group,
+            ec2.Port.tcp(5432),
+            "Allow Api Lambdas to access RDS on port 5432"
+        )
+        
+        
