@@ -49,19 +49,19 @@ class MainProjectStack(aws_cdk.Stack):
         print(f"----------- ********* lambda_security_group : {lambda_security_group}")
 
         # Create Security Group for CodeBuild
-        CodeBuild_security_group = SecurityGroupConstruct.create_codebuild_security_group(
+        codebuild_security_group = SecurityGroupConstruct.create_codebuild_security_group(
             stack,
             existing_vpc
         )
 
-        CodeBuild_security_group.connections.allow_to_any_ipv4(
+        codebuild_security_group.connections.allow_to_any_ipv4(
             ec2.Port.tcp(443),
             "Grant Outbound to Github (or anything else.)"
         )
 
         # Allow connection to RDS for Codebuild
         rds_security_group.connections.allow_from(
-            CodeBuild_security_group,
+            codebuild_security_group,
             ec2.Port.tcp(5432),
             "Allow CodeBuild access to RDS on port 5432"
         )
