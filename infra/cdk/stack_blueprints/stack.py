@@ -71,4 +71,21 @@ class MainProjectStack(aws_cdk.Stack):
             lambda_security_group,
             ec2.Port.tcp(5432),
             "Allow Api Lambdas to access RDS on port 5432"
-        )     
+        )
+
+        # Added Secret Manager Endpoint to VPC.
+        existing_vpc.add_interface_endpoint(
+            "SecretManagerEndpoint",
+            service=ec2.InterfaceVpcEndpointAwsService.SECRETS_MANAGER
+        )
+        # Added Code build Endpoint to VPC.
+        existing_vpc.add_interface_endpoint(
+            "CodeBuildEndpoint",
+            service=ec2.InterfaceVpcEndpointAwsService.CODEBUILD
+        )
+        # Added Athena Endpoint to VPC.
+        existing_vpc.add_interface_endpoint(
+            "AthenaEndpoint",
+            service=ec2.InterfaceVpcEndpointAwsService.ATHENA
+        )
+        
