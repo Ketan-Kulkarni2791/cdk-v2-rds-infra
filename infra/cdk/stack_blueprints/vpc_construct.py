@@ -11,6 +11,7 @@ class VPCService():
         """Method to obtain existing VPC."""
         get_vpc = ec2.Vpc.from_lookup(
             scope=stack,
+            id="vpc-09d3f642a4f17a01e"
             is_default=True,
             vpc_name='kk-default-vpc'
         )
