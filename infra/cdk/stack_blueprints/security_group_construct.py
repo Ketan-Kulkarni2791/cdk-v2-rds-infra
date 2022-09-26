@@ -31,7 +31,7 @@ class SecurityGroupConstruct:
         )
 
     @staticmethod
-    def create_CodeBuild_security_group(stack: aws_cdk.Stack, vpc: str) -> ec2.SecurityGroup:
+    def create_codebuild_security_group(stack: aws_cdk.Stack, vpc: str) -> ec2.SecurityGroup:
         """Method to create Security Group for CodeBuild."""
         return ec2.SecurityGroup(
             stack,

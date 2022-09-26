@@ -49,7 +49,7 @@ class MainProjectStack(aws_cdk.Stack):
         print(f"----------- ********* lambda_security_group : {lambda_security_group}")
 
         # Create Security Group for CodeBuild
-        CodeBuild_security_group = SecurityGroupConstruct.create_CodeBuild_security_group(
+        CodeBuild_security_group = SecurityGroupConstruct.create_codebuild_security_group(
             stack,
             existing_vpc
         )
@@ -71,6 +71,4 @@ class MainProjectStack(aws_cdk.Stack):
             lambda_security_group,
             ec2.Port.tcp(5432),
             "Allow Api Lambdas to access RDS on port 5432"
-        )
-        
-        
+        )     
