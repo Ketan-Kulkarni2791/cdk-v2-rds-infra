@@ -40,3 +40,17 @@ class MainProjectStack(aws_cdk.Stack):
             existing_vpc
         )
         print(f"----------- ********* rds_security_group : {rds_security_group}")
+
+        # Create Security Group for Lambda
+        lambda_security_group = SecurityGroupConstruct.create_lambda_security_group(
+            stack,
+            existing_vpc
+        )
+        print(f"----------- ********* lambda_security_group : {lambda_security_group}")
+
+        # Create Security Group for CodeBuild
+        CodeBuild_security_group = SecurityGroupConstruct.create_CodeBuild_security_group(
+            stack,
+            existing_vpc
+        )
+        print(f"----------- ********* CodeBuild_security_group : {CodeBuild_security_group}")
