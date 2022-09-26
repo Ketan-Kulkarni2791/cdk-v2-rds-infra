@@ -3,6 +3,8 @@ from typing import Dict, Any
 import aws_cdk
 from constructs import Construct
 
+from .vpc_construct import VPCService
+
 
 class MainProjectStack(aws_cdk.Stack):
     """Build the app stacks and its resources."""
@@ -17,3 +19,14 @@ class MainProjectStack(aws_cdk.Stack):
     @staticmethod
     def create_stack(stack: aws_cdk.Stack, env: str, config: dict) -> None:
         """Create and add the resources to the application stack"""
+
+        # Import the existing VPN, subnet and create the Securty Group
+        MainProjectStack.setup_vpc_and_security(stack)
+
+    @staticmethod
+    def setup_vpc_and_security(stack: aws_cdk.Stack) -> None:
+        """Import the existing VPN, subnet and create the Securty Group"""
+
+        # Import existing VPC
+        existing_vpc = VPCService.import_vpc(stack)
+        print(f"--------------- ******* existing_vpc : {existing_vpc}")
