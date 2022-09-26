@@ -87,5 +87,4 @@ class MainProjectStack(aws_cdk.Stack):
         existing_vpc.add_interface_endpoint(
             "AthenaEndpoint",
             service=ec2.InterfaceVpcEndpointAwsService.ATHENA
-        )
-        
+        )    
