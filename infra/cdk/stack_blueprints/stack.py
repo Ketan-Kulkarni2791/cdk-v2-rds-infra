@@ -20,6 +20,9 @@ class MainProjectStack(aws_cdk.Stack):
     def create_stack(stack: aws_cdk.Stack, env: str, config: dict) -> None:
         """Create and add the resources to the application stack"""
 
+        print(env)
+        print(config)
+
         # Import the existing VPN, subnet and create the Securty Group
         MainProjectStack.setup_vpc_and_security(stack)
 
