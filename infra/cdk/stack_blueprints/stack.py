@@ -4,6 +4,7 @@ import aws_cdk
 from constructs import Construct
 
 from .vpc_construct import VPCService
+from .security_group_construct import SecurityGroupConstruct
 
 
 class MainProjectStack(aws_cdk.Stack):
@@ -32,4 +33,10 @@ class MainProjectStack(aws_cdk.Stack):
 
         # Import existing VPC
         existing_vpc = VPCService.import_vpc(stack)
-        print(f"--------------- ******* existing_vpc : {existing_vpc}")
+
+        # Create Security Group for RDS
+        rds_security_group = SecurityGroupConstruct.create_rds_security_group(
+            stack,
+            existing_vpc
+        )
+        print(f"----------- ********* rds_security_group : {rds_security_group}")
