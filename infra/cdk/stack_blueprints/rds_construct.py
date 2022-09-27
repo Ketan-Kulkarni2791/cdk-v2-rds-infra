@@ -9,6 +9,7 @@ import aws_cdk.aws_secretsmanager as sm
 class RDSConstruct:
     """Static methods to create RDS Db."""
 
+    #pylint: disable=too-many-arguments
     @staticmethod
     def create_rds(
             stack: aws_cdk.Stack,
@@ -30,12 +31,11 @@ class RDSConstruct:
             vpc=vpc,
             vpc_subnets=ec2.SubnetSelection(
                 subnets=[
-                    ec2.Subnet.from_subnet_id(stack, "datatier_subnet_az1", config["global"]["subnet1_id"],
-                    ec2.Subnet.from_subnet_id(stack, "datatier_subnet_az2", config["global"]["subnet2_id"])
-                    )
-                ]
+                        ec2.Subnet.from_subnet_id(stack, "datatier_subnet_az1", config["global"]["subnet1_id"]),
+                        ec2.Subnet.from_subnet_id(stack, "datatier_subnet_az2", config["global"]["subnet2_id"])
+                    ]
+                )
             )
-        )
         db_cluster_parameter_grp = rds.CfnDBClusterParameterGroup(
             scope=stack,
             id=f"{config['global']['appNameShort']}-rds-cluster-parameter-group",
@@ -70,7 +70,7 @@ class RDSConstruct:
             rds.CfnDBCluster(
                 scope=stack,
                 id="rdsinfrasetuprds",
-                backeup_retention_period=20,
+                # backeup_retention_period=20,
                 database_name="rdsinfradatabase",
                 db_cluster_identifier=f"{config['global']['appNameShort']}-rds-primary-cluster",
                 db_cluster_parameter_group_name=db_cluster_parameter_grp.ref,
