@@ -58,12 +58,12 @@ class MainProjectStack(aws_cdk.Stack):
             "bucket_name",
             config['global']['bucket_name']
         )
-        SSMConstruct.create_param(
-            stack,
-            config,
-            "kms_key_arn",
-            kms.Key
-        )
+        # SSMConstruct.create_param(
+        #     stack,
+        #     config,
+        #     "kms_key_arn",
+        #     kms.Key
+        # )
 
     @staticmethod
     def setup_vpc_and_security(stack: aws_cdk.Stack) -> None:
