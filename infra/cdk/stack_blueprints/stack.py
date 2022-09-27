@@ -3,6 +3,7 @@ from typing import Dict, Any
 import aws_cdk
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_s3 as s3
+import aws_cdk.aws_kms as kms
 from constructs import Construct
 
 from .vpc_construct import VPCService
@@ -10,6 +11,7 @@ from .security_group_construct import SecurityGroupConstruct
 from .iam_construct import IAMConstruct
 from .kms_construct import KMSConstruct
 from .s3_construct import S3Construct
+from .ssm_construct import SSMConstruct
 
 
 class MainProjectStack(aws_cdk.Stack):
@@ -47,6 +49,20 @@ class MainProjectStack(aws_cdk.Stack):
             config=config,
             env=env,
             stack=stack
+        )
+
+        # SSM Parameter Construct
+        SSMConstruct.create_param(
+            stack,
+            config,
+            "bucket_name",
+            config['global']['bucket_name']
+        )
+        SSMConstruct.create_param(
+            stack,
+            config,
+            "kms_key_arn",
+            kms.Key
         )
 
     @staticmethod
