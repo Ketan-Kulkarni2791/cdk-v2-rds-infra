@@ -87,5 +87,5 @@ class RDSConstruct:
             )
         )
         rds_db_instance.add_depends_on(rds_db_cluster)
-        rds_db_cluster.node.add_dependancy(db_subnet)
+        rds_db_cluster.node.add_dependency(db_subnet)
         return rds_db_cluster
