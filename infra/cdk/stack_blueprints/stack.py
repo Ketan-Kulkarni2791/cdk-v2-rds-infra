@@ -44,6 +44,7 @@ class MainProjectStack(aws_cdk.Stack):
             config=config,
             policy_doc=kms_pol_doc
         )
+        print(kms_key)
 
         # S3 Bucket Infra Setup --------------------------------------------------
         MainProjectStack.create_bucket(
@@ -76,7 +77,7 @@ class MainProjectStack(aws_cdk.Stack):
             existing_vpc,
             rds_security_group,
             secret_manager,
-            kms_key,
+            # kms_key,
             config["global"]["region"]
         )
 

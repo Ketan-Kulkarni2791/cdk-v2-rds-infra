@@ -17,7 +17,7 @@ class RDSConstruct:
             vpc: ec2.Vpc,
             rds_security_group: ec2.SecurityGroup,
             secret: sm.Secret,
-            kms_key: kms.CfnKey,
+            # kms_key: kms.CfnKey,
             region: str) -> rds.CfnDBCluster:
         """Method to create RDS Db."""
         print(region)
@@ -78,7 +78,7 @@ class RDSConstruct:
                 db_subnet_group_name=db_subnet.subnet_group_name,
                 engine="aurora-postgresql",
                 engine_version="13.6",
-                kms_key_id=kms_key.attr_key_id,
+                # kms_key_id=kms_key.attr_key_id,
                 master_username=db_username,
                 master_user_password=db_password,
                 vpc_security_group_ids=[rds_security_group.security_group_id],
