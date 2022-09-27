@@ -3,7 +3,7 @@ from typing import Dict, Any
 import aws_cdk
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_s3 as s3
-import aws_cdk.aws_kms as kms
+# import aws_cdk.aws_kms as kms
 from constructs import Construct
 
 from .vpc_construct import VPCService
