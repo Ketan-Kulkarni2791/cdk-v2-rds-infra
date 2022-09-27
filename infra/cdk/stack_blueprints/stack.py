@@ -12,6 +12,8 @@ from .iam_construct import IAMConstruct
 from .kms_construct import KMSConstruct
 from .s3_construct import S3Construct
 from .ssm_construct import SSMConstruct
+from .secret_manager_construct import SecretManagerConstruct
+from .rds_construct import RDSConstruct
 
 
 class MainProjectStack(aws_cdk.Stack):
@@ -32,7 +34,7 @@ class MainProjectStack(aws_cdk.Stack):
         print(config)
 
         # Import the existing VPN, subnet and create the Securty Group
-        MainProjectStack.setup_vpc_and_security(stack)
+        existing_vpc, rds_security_group = MainProjectStack.setup_vpc_and_security(stack)
 
         # KMS infra setup ------------------------------------------------------
         kms_pol_doc = IAMConstruct.get_kms_policy_document()
@@ -42,7 +44,6 @@ class MainProjectStack(aws_cdk.Stack):
             config=config,
             policy_doc=kms_pol_doc
         )
-        print(kms_key)
 
         # S3 Bucket Infra Setup --------------------------------------------------
         MainProjectStack.create_bucket(
@@ -64,6 +65,24 @@ class MainProjectStack(aws_cdk.Stack):
         #     "kms_key_arn",
         #     kms.Key
         # )
+
+        # Secret Manager Infra
+        secret_manager = SecretManagerConstruct.create_secret(stack, config)
+
+        # RDS Database Infra
+        rds_db_cluster = RDSConstruct.create_rds(
+            stack,
+            config,
+            existing_vpc,
+            rds_security_group,
+            secret_manager,
+            kms_key,
+            config["global"]["region"]
+        )
+
+        # SSM Parameter Construct
+        SSMConstruct.create_param(stack, config, "rds_secret_full_arn", secret_manager.secret_full_arn)
+        SSMConstruct.create_param(stack, config, "rds_endpoint", rds_db_cluster.attr_endpoint_address)
 
     @staticmethod
     def setup_vpc_and_security(stack: aws_cdk.Stack) -> None:
@@ -125,6 +144,8 @@ class MainProjectStack(aws_cdk.Stack):
             "AthenaEndpoint",
             service=ec2.InterfaceVpcEndpointAwsService.ATHENA
         )
+
+        return existing_vpc, rds_security_group
 
     @staticmethod
     def create_bucket(
