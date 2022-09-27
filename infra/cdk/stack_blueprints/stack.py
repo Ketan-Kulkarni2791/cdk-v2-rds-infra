@@ -2,10 +2,14 @@
 from typing import Dict, Any
 import aws_cdk
 import aws_cdk.aws_ec2 as ec2
+import aws_cdk.aws_s3 as s3
 from constructs import Construct
 
 from .vpc_construct import VPCService
 from .security_group_construct import SecurityGroupConstruct
+from .iam_construct import IAMConstruct
+from .kms_construct import KMSConstruct
+from .s3_construct import S3Construct
 
 
 class MainProjectStack(aws_cdk.Stack):
@@ -27,6 +31,23 @@ class MainProjectStack(aws_cdk.Stack):
 
         # Import the existing VPN, subnet and create the Securty Group
         MainProjectStack.setup_vpc_and_security(stack)
+
+        # KMS infra setup ------------------------------------------------------
+        kms_pol_doc = IAMConstruct.get_kms_policy_document()
+
+        kms_key = KMSConstruct.create_kms_key(
+            stack=stack,
+            config=config,
+            policy_doc=kms_pol_doc
+        )
+        print(kms_key)
+
+        # S3 Bucket Infra Setup --------------------------------------------------
+        MainProjectStack.create_bucket(
+            config=config,
+            env=env,
+            stack=stack
+        )
 
     @staticmethod
     def setup_vpc_and_security(stack: aws_cdk.Stack) -> None:
@@ -87,4 +108,19 @@ class MainProjectStack(aws_cdk.Stack):
         existing_vpc.add_interface_endpoint(
             "AthenaEndpoint",
             service=ec2.InterfaceVpcEndpointAwsService.ATHENA
-        )    
+        )
+
+    @staticmethod
+    def create_bucket(
+            config: dict,
+            env: str,
+            stack: aws_cdk.Stack) -> s3.Bucket:
+        """Create an encrypted s3 bucket."""
+
+        print(env)
+        s3_bucket = S3Construct.create_bucket(
+            stack=stack,
+            bucket_id=f"rds-infra-{config['global']['env']}",
+            bucket_name=config['global']['bucket_name']
+        )
+        print(s3_bucket)
