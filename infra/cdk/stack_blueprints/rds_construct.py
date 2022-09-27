@@ -2,7 +2,7 @@
 import aws_cdk
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_rds as rds
-import aws_cdk.aws_kms as kms
+# import aws_cdk.aws_kms as kms
 import aws_cdk.aws_secretsmanager as sm
 
 
