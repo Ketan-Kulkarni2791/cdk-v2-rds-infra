@@ -33,9 +33,9 @@ class RDSConstruct:
                 subnets=[
                         ec2.Subnet.from_subnet_id(stack, "datatier_subnet_az1", config["global"]["subnet1_id"]),
                         ec2.Subnet.from_subnet_id(stack, "datatier_subnet_az2", config["global"]["subnet2_id"])
-                    ]
-                )
+                ]
             )
+        )
         db_cluster_parameter_grp = rds.CfnDBClusterParameterGroup(
             scope=stack,
             id=f"{config['global']['appNameShort']}-rds-cluster-parameter-group",
