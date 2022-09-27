@@ -20,7 +20,8 @@ class SSMConstruct:
     @staticmethod
     def get_param(stack: aws_cdk.Stack, config: dict, param_name: str) -> str:
         """Method to get param."""
+        name = f"{config['global']['appNameShort']}-{param_name.replace('_', '-')}-{config['global']['env']}"
         return aws_ssm.StringParameter.value_for_string_parameter(
             scope=stack,
-            parameter_name=f"{config['global']['appNameShort']}-{param_name.replace('_', '-')}-{config['global']['env']}"
+            parameter_name=name
         )
