@@ -16,7 +16,7 @@ from .secret_manager_construct import SecretManagerConstruct
 from .rds_construct import RDSConstruct
 
 
-class MainProjectStack(aws_cdk.Stack):
+class RDSStack(aws_cdk.Stack):
     """Build the app stacks and its resources."""
     def __init__(self, env_var: str, scope: Construct, 
                  app_id: str, config: dict, **kwargs: Dict[str, Any]) -> None:
@@ -24,7 +24,7 @@ class MainProjectStack(aws_cdk.Stack):
         super().__init__(scope, app_id, **kwargs)
         self.env_var = env_var
         self.config = config
-        MainProjectStack.create_stack(self, self.env_var, config=config)
+        RDSStack.create_stack(self, self.env_var, config=config)
 
     @staticmethod
     def create_stack(stack: aws_cdk.Stack, env: str, config: dict) -> None:
@@ -34,7 +34,7 @@ class MainProjectStack(aws_cdk.Stack):
         print(config)
 
         # Import the existing VPN, subnet and create the Securty Group
-        existing_vpc, rds_security_group = MainProjectStack.setup_vpc_and_security(stack)
+        existing_vpc, rds_security_group = RDSStack.setup_vpc_and_security(stack)
 
         # KMS infra setup ------------------------------------------------------
         kms_pol_doc = IAMConstruct.get_kms_policy_document()
@@ -47,7 +47,7 @@ class MainProjectStack(aws_cdk.Stack):
         print(kms_key)
 
         # S3 Bucket Infra Setup --------------------------------------------------
-        MainProjectStack.create_bucket(
+        RDSStack.create_bucket(
             config=config,
             env=env,
             stack=stack
