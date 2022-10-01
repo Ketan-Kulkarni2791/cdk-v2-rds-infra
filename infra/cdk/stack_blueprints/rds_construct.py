@@ -39,7 +39,7 @@ class RDSConstruct:
         db_cluster_parameter_grp = rds.CfnDBClusterParameterGroup(
             scope=stack,
             id=f"{config['global']['appNameShort']}-rds-cluster-parameter-group",
-            family="aurora-postgresql13",
+            family="postgresql13",
             parameters={"rds.force_ssl": "1"},
             description="RDS Infra Setup rds db cluster parameter group"
         )
@@ -55,9 +55,9 @@ class RDSConstruct:
             db_instance_class="db.t2.micro",
             db_cluster_identifier=f"{config['global']['appNameShort']}-rds-primary-cluster",
             db_instance_identifier=f"{config['global']['appNameShort']}-rds-primary-instance",
-            db_parameter_group_name="default.aurora-postgresql13",
+            db_parameter_group_name="default.postgresql13",
             db_subnet_group_name=db_subnet.subnet_group_name,
-            engine="aurora-postgresql",
+            engine="postgresql",
             # engine_version="13.6",
             monitoring_interval=0,
             auto_minor_version_upgrade=True,
@@ -76,7 +76,7 @@ class RDSConstruct:
                 db_cluster_parameter_group_name=db_cluster_parameter_grp.ref,
                 port=5432,
                 db_subnet_group_name=db_subnet.subnet_group_name,
-                engine="aurora-postgresql",
+                engine="postgresql",
                 # engine_version="13.6",
                 # kms_key_id=kms_key.attr_key_id,
                 master_username=db_username,
