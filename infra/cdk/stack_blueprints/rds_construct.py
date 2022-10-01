@@ -36,13 +36,13 @@ class RDSConstruct:
                 ]
             )
         )
-        db_cluster_parameter_grp = rds.CfnDBClusterParameterGroup(
-            scope=stack,
-            id=f"{config['global']['appNameShort']}-rds-cluster-parameter-group",
-            family="default.aurora-postgresql13",
-            parameters={"rds.force_ssl": "1"},
-            description="RDS Infra Setup rds db cluster parameter group"
-        )
+        # db_cluster_parameter_grp = rds.CfnDBClusterParameterGroup(
+        #     scope=stack,
+        #     id=f"{config['global']['appNameShort']}-rds-cluster-parameter-group",
+        #     family="default.aurora-postgresql13",
+        #     parameters={"rds.force_ssl": "1"},
+        #     description="RDS Infra Setup rds db cluster parameter group"
+        # )
         global_cluster = rds.CfnGlobalCluster(
             scope=stack,
             id=f"{config['global']['appNameShort']}-rds-global-cluster",
@@ -73,7 +73,7 @@ class RDSConstruct:
                 # backeup_retention_period=20,
                 database_name="rdsinfradatabase",
                 db_cluster_identifier=f"{config['global']['appNameShort']}-rds-primary-cluster",
-                db_cluster_parameter_group_name=db_cluster_parameter_grp.ref,
+                # db_cluster_parameter_group_name=db_cluster_parameter_grp.ref,
                 port=5432,
                 db_subnet_group_name=db_subnet.subnet_group_name,
                 engine="aurora-postgresql",
