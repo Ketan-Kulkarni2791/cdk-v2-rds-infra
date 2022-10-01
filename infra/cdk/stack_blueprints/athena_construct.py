@@ -1,6 +1,5 @@
 """Main python file_key for adding resources to the application stack."""
 import aws_cdk.aws_athena as aws_athena
-from symbol import parameters
 
 
 class AthenaConstruct:
@@ -34,4 +33,3 @@ class AthenaConstruct:
                 enforce_work_group_configuration=True,
             ),
         )
- 

@@ -14,7 +14,7 @@ def main() -> None:
     rds_stack = RDSStack(
         env_var=env,
         scope=app,
-        app_id=f"config['global']['app-id']-RDS-Stack",
+        app_id=f"{config['global']['app-id']}-RDS-Stack",
         config=config,
         env={
             "region": config['global']["region"],
@@ -24,7 +24,7 @@ def main() -> None:
     FlywayStack(
         env_var=env,
         scope=app,
-        app_id=f"config['global']['app-id']-Flyway-Stack",
+        app_id=f"{config['global']['app-id']}-Flyway-Stack",
         config=config,
         rdsStack=rds_stack,
         env={
@@ -32,8 +32,7 @@ def main() -> None:
             "account": config['global']['awsAccount']
         }
     )
-    
-    app.synth()
 
+    app.synth()
 
 main()
