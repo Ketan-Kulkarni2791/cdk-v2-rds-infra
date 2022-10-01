@@ -25,7 +25,7 @@ class AthenaConstruct:
             description="Workgroup for RDS Infra.",
             work_group_configuration=aws_athena.CfnWorkGroup.WorkGroupConfigurationProperty(
                 result_configuration=aws_athena.CfnWorkGroup.ResultConfigurationProperty(
-                    outout_location=f"s3://{bucket_name}",
+                    output_location=f"s3://{bucket_name}",
                     encryption_configuration=aws_athena.CfnWorkGroup.EncryptionConfigurationProperty(
                         encryption_option="SSE_S3"
                     ),

@@ -30,7 +30,7 @@ class FlywayStack(Stack):
         rds_secret_arn = SSMConstruct.get_param(stack, config, "rds_secret_full_arn")
         rds_endpoint = SSMConstruct.get_param(stack, config, "rds_endpoint")
 
-        FlywayStack.setup_athena(stack: aws_cdk.Stack, rds_stack: RDSStack, rds_endpoint, rds_secret_arn)
+        FlywayStack.setup_athena(stack, rds_stack, rds_endpoint, rds_secret_arn)
 
     def setup_athena(stack: aws_cdk.Stack, rds_stack: RDSStack, rds_endpoint, rds_secret_arn):
         """Athena Infra setup."""
