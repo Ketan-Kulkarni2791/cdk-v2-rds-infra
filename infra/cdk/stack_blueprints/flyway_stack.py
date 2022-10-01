@@ -3,7 +3,7 @@ from typing import Dict, Any
 import aws_cdk
 from aws_cdk import Stack
 from constructs import Construct
-from rds_stack import RDSStack
+from stack_blueprints.rds_stack import RDSStack
 
 from infra.cdk.stack_blueprints.ssm_construct import SSMConstruct
 from .athena_construct import AthenaConstruct
