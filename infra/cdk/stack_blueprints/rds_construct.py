@@ -55,7 +55,7 @@ class RDSConstruct:
             db_instance_class="db.t2.micro",
             db_cluster_identifier=f"{config['global']['appNameShort']}-rds-primary-cluster",
             db_instance_identifier=f"{config['global']['appNameShort']}-rds-primary-instance",
-            db_parameter_group_name="default.postgresql13",
+            db_parameter_group_name="postgres13",
             db_subnet_group_name=db_subnet.subnet_group_name,
             engine="postgresql",
             # engine_version="13.6",
