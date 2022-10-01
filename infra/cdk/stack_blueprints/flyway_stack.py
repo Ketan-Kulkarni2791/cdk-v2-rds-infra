@@ -2,11 +2,11 @@
 from typing import Dict, Any
 import aws_cdk
 from aws_cdk import Stack
-from rds_stack import RDSStack
 from constructs import Construct
+from rds_stack import RDSStack
 
-from .athena_construct import AthenaConstruct
 from infra.cdk.stack_blueprints.ssm_construct import SSMConstruct
+from .athena_construct import AthenaConstruct
 
 
 class FlywayStack(Stack):
@@ -32,6 +32,7 @@ class FlywayStack(Stack):
 
         FlywayStack.setup_athena(stack, rds_stack, rds_endpoint, rds_secret_arn)
 
+    @staticmethod
     def setup_athena(stack: aws_cdk.Stack, rds_stack: RDSStack, rds_endpoint, rds_secret_arn):
         """Athena Infra setup."""
         AthenaConstruct.create_work_group(stack, rds_endpoint, rds_secret_arn)
