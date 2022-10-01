@@ -77,7 +77,7 @@ class RDSConstruct:
                 port=5432,
                 db_subnet_group_name=db_subnet.subnet_group_name,
                 engine="aurora-postgresql",
-                engine_version="13.6",
+                # engine_version="13.6",
                 # kms_key_id=kms_key.attr_key_id,
                 master_username=db_username,
                 master_user_password=db_password,
