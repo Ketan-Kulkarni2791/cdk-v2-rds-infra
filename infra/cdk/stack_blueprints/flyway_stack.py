@@ -5,7 +5,7 @@ from aws_cdk import Stack
 from constructs import Construct
 from stack_blueprints.rds_stack import RDSStack
 
-from infra.cdk.stack_blueprints.ssm_construct import SSMConstruct
+from .ssm_construct import SSMConstruct
 from .athena_construct import AthenaConstruct
 
 
