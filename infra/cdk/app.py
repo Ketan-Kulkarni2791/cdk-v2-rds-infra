@@ -26,7 +26,7 @@ def main() -> None:
         scope=app,
         app_id=f"{config['global']['app-id']}-Flyway-Stack",
         config=config,
-        rdsStack=rds_stack,
+        rds_stack=rds_stack,
         env={
             "region": config['global']["region"],
             "account": config['global']['awsAccount']
