@@ -39,7 +39,7 @@ class RDSConstruct:
         db_cluster_parameter_grp = rds.CfnDBClusterParameterGroup(
             scope=stack,
             id=f"{config['global']['appNameShort']}-rds-cluster-parameter-group",
-            family="postgresql13",
+            family="postgres13",
             parameters={"rds.force_ssl": "1"},
             description="RDS Infra Setup rds db cluster parameter group"
         )
