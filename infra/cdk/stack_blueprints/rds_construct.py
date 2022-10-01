@@ -58,7 +58,7 @@ class RDSConstruct:
             db_parameter_group_name="default.aurora-postgresql13",
             db_subnet_group_name=db_subnet.subnet_group_name,
             engine="aurora-postgresql",
-            engine_version="13.6",
+            # engine_version="13.6",
             monitoring_interval=0,
             auto_minor_version_upgrade=True,
             publicly_accessible=False,
