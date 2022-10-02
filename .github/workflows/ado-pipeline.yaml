@@ -107,6 +107,6 @@ jobs:
         run: |
           python ${{ env.SCRIPT_DIRECTORY }}/install_lambda_reqs.py
 
-      - name: CDK Deploy
+      - name: CDK Deploy rds_stack
         run: cdk deploy --require-approval "never"
         working-directory: ${{ env.BASE_DIRECTORY }}
