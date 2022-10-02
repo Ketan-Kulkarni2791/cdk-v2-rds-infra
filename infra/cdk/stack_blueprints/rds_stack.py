@@ -47,7 +47,7 @@ class RDSStack(aws_cdk.Stack):
         print(kms_key)
 
         # S3 Bucket Infra Setup --------------------------------------------------
-        bucketname = RDSStack.create_bucket(
+        RDSStack.create_bucket(
             config=config,
             env=env,
             stack=stack
@@ -58,8 +58,7 @@ class RDSStack(aws_cdk.Stack):
             stack,
             config,
             "bucket_name",
-            bucketname.bucket_name
-            # config['global']['bucket_name']
+            config['global']['bucket_name']
         )
         # SSMConstruct.create_param(
         #     stack,
