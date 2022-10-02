@@ -35,5 +35,6 @@ class FlywayStack(Stack):
     @staticmethod
     def setup_athena(stack: aws_cdk.Stack, rds_stack: RDSStack, rds_endpoint, rds_secret_arn):
         """Athena Infra setup."""
-        print(rds_stack)
-        AthenaConstruct.create_work_group(stack, rds_endpoint, rds_secret_arn)
+        AthenaConstruct.create_work_group(stack, rds_stack.bucketname.bucket_name)
+        print(rds_endpoint)
+        print(rds_secret_arn)
